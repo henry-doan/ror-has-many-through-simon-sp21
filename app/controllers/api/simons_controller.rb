@@ -1,8 +1,8 @@
 class Api::SimonsController < ApplicationController
-  before_action: set_simons, only: [:show, :update, :destroy]
+  before_action :set_simons, only: [:show, :update, :destroy, :simonUsers]
 
   def index
-    render json: Simons.all
+    render json: Simon.all
   end
 
   def show
@@ -31,7 +31,7 @@ class Api::SimonsController < ApplicationController
     render json: { message: 'Simon is gone' }
   end
 
-  def simonsUsers
+  def simonUsers
     render json: @simon.users
   end
 

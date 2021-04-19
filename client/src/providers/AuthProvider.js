@@ -6,6 +6,13 @@ export const AuthConsumer = AuthContext.Consumer;
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
+  const [userSimons, setUserSimons] = useState([])
+
+  const grabUserSimons = () => {
+    axios.get(`/api/userSimons/${user.id}`)
+      .then( res => setUserSimons(res.data))
+      .catch( err => console.log(err))
+  }
 
   const handleRegister = (user, history) => {
     axios.post('/api/auth', user)
@@ -37,11 +44,13 @@ const AuthProvider = ({ children }) => {
   return(
     <AuthContext.Provider value={{
       user,
+      userSimons, 
       handleRegister: handleRegister,
       handleLogin: handleLogin,
       handleLogout: handleLogout, 
       authenticated: user !== null,
       setUser: (user) => setUser(user),
+      grabUserSimons: grabUserSimons, 
     }}>
       { children }
     </AuthContext.Provider>

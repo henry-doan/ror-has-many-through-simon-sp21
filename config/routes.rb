@@ -6,7 +6,8 @@ Rails.application.routes.draw do
       resources :dpls
     end
 
-    get 'simonUsers', to: 'simons#simonUsers'
-    get 'dplUsers', to: 'dpls#dplUsers'
+    get 'simonUsers/:id', to: 'simons#simonUsers'
+    get 'dplUsers/:simon_id', to: 'dpls#dplUsers'
+    get 'userSimons/:id', to: 'users#userSimons'
   end
 end
