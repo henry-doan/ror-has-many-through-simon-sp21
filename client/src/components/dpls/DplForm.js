@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Form } from 'semantic-ui-react';
+import { AuthConsumer } from '../../providers/AuthProvider';
 
-const DplForm = ({ simonId, addDpl }) => {
-  const [dpl, setDpl] = useState({ location: "", built: 0, capacity: 0, user_id: 1 })
+const DplForm = ({ simonId, addDpl, user }) => {
+  const [dpl, setDpl] = useState({ location: "", built: 0, capacity: 0, user_id: user.id })
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setDpl({...dpl, built: parseInt(dpl.built), capacity: parseInt(dpl.capacity), user_id: 1})
+    setDpl({...dpl, built: parseInt(dpl.built), capacity: parseInt(dpl.capacity), user_id: user.id })
     addDpl(simonId, dpl)
-    setDpl({ location: "", built: 0, capacity: 0, user_id: 1 })
+    setDpl({ location: "", built: 0, capacity: 0, user_id: user.id })
   }
 
   return(
@@ -36,4 +37,12 @@ const DplForm = ({ simonId, addDpl }) => {
   )
 }
 
-export default DplForm;
+const ConnectedDplForm = (props) => (
+  <AuthConsumer>
+    { value => (
+      <DplForm {...props} user={value.user} />
+    )}
+  </AuthConsumer>
+)
+
+export default ConnectedDplForm;
